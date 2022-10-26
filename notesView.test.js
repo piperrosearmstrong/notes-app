@@ -33,4 +33,18 @@ describe('Notes view', () => {
     expect(document.querySelectorAll('div.note').length).toEqual(1);
     expect(document.querySelectorAll('div.note')[0].textContent).toEqual("This is a test note.");
   });
+
+  it('clears previous notes', () => {
+    document.body.innerHTML = fs.readFileSync('./index.html');
+    
+    const model = new NotesModel();
+    const view = new NotesView(model);
+    model.addNote('Note One');
+    model.addNote('Note Two');
+
+    view.displayNotes();
+    view.displayNotes();
+
+    expect(document.querySelectorAll('div.note').length).toEqual(2);
+  });
 });
