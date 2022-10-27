@@ -47,4 +47,18 @@ describe('Notes view', () => {
 
     expect(document.querySelectorAll('div.note').length).toEqual(2);
   });
+
+  it('displays notes from API', () => {
+    let client = new NotesClient();
+    fetch.mockResponseOnce(JSON.stringify({
+      name: "name", 
+      id: 200
+    }));
+
+    client.loadNotes((returnedDataFromApi) => {
+      expect(returnedDataFromApi.displayNotesFromApi).toEqual("name");
+
+      done();
+    });
+  });
 });
