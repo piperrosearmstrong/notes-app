@@ -1,6 +1,6 @@
 const NotesClient = require('./notesClient');
 
-require('jest-fetch-mock').enableFetchMocks()
+require('jest-fetch-mock').enableFetchMocks();
 
 describe('NotesClient', () => {
   it('requests the list of notes from the backend', (done) => {

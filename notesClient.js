@@ -1,10 +1,13 @@
 class NotesClient {
-  loadNotes(note){
-    fetch('https://localhost:300/notes' + note)
-    .then(response => response.json())
+  constructor() {
+  }
+  loadNotes(callback) {
+    fetch("http://localhost:3000/notes")
+    .then(res => res.json())
     .then(data => {
-      return note(data);
-    });
+      console.log(data);
+      callback(data);
+    })
   }
 }
 

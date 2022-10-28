@@ -11,8 +11,12 @@ class NotesModel {
     (this.notepad).push(memo);
   }
 
+  setNotes(memo) {
+    (this.notepad).push(memo[0]);
+  }
+
   reset() {
-    (this.notepad).length = 0
+    (this.notepad).length = 0;
   }
 };
 

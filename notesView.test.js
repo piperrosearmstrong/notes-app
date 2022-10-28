@@ -3,8 +3,11 @@
  */
 
 const fs = require('fs');
+const NotesClient = require('./notesClient');
 const NotesModel = require('./notesModel');
 const NotesView = require('./notesView'); 
+
+require('jest-fetch-mock').enableFetchMocks();
 
 describe('Notes view', () => {
   // it('displays two notes', () => {
@@ -48,17 +51,21 @@ describe('Notes view', () => {
     expect(document.querySelectorAll('div.note').length).toEqual(2);
   });
 
-  it('displays notes from API', () => {
-    let client = new NotesClient();
-    fetch.mockResponseOnce(JSON.stringify({
-      name: "name", 
-      id: 200
-    }));
+  it("notesView class", () => {
 
-    client.loadNotes((returnedDataFromApi) => {
-      expect(returnedDataFromApi.displayNotesFromApi).toEqual("name");
+    const mockClient = {
+      loadNotes: (fn) => {
+        fn(['This note is coming from the server']);
+      }
+    }
 
-      done();
-    });
+    const model = new NotesModel();
+    const view = new NotesView(model, mockClient);
+
+    view.displayNotesFromApi();
+
+    expect(document.querySelectorAll('div.note').length).toEqual(1);
+    expect(document.querySelectorAll('div.note')[0].textContent).toEqual(
+      'This note is coming from the server');
   });
 });
